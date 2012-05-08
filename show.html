@@ -1,0 +1,114 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+  <title>新闻阅读</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="assets/css/jquery.mobile-1.1.0.css" />
+  <script src="assets/js/jquery-1.7.2.min.js"></script>
+  <style type="text/css">
+    #xload { text-align:center; display: none;}
+    img {max-width: 100%;}
+    #news-title{ 
+      margin: 0px;
+      padding: 8px;
+      border-top: 6px solid orange;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-bottom: 1px solid #EEE;
+      text-align: center;
+    }
+    .ui-content { padding-top: 0px; }
+  </style>
+</head>
+<body> 
+
+<div data-role="page">
+  <div data-role="header" data-theme="f">
+    <p id="news-title"></p>
+  </div>
+
+  <div data-role="content">
+    
+    <p id="news"></p>
+    <p id="xload">加载中...</p>
+  </div>
+  <div data-role="footer" data-position="fixed" data-theme="a">
+    <div data-role="navbar" data-iconpos="top">
+      <ul>
+        <li><a href="history.html" data-ajax="false" data-icon="grid">阅读历史</a></li>
+        <li><a href="index.html" data-icon="back" data-ajax="false">返回列表</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div data-role="dialog" id="dialog">
+  
+    <div data-role="header" data-theme="d">
+      <h1>错误提示</h1>
+    </div>
+
+    <div data-role="content" data-theme="c">
+      <a href="#" data-role="button" data-rel="back" data-theme="b">加载超时，重试？</a>
+      <a href="index.html" data-role="button" data-ajax="false" data-theme="c">取消</a> 
+    </div>
+</div>
+<script type="text/javascript" src="assets/js/jquery.mobile-1.1.0.js"></script>
+<script type="text/javascript" src="assets/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript">
+$(document).bind('pageinit', function(){
+  var get = window.location.search.slice(1).split('&');
+  
+  // set page title
+  $('#news-title').html( decodeURIComponent( get[1] ) );
+  var localData = JSON.parse(localStorage.getItem('news-show')) || {};
+  
+  if(typeof localData[ get[0] ] == "undefined"){
+    
+    // show loading text
+    $('#xload').show();
+
+    $.ajax({
+      url: get[0],
+      type: 'GET',
+      dataType: 'html',
+      success: function(data){
+        $('#xload').hide();
+
+        var curdata = $(data);
+        var htmlData = curdata.find('#news_content').find('#googleAd_afc,.digbox').remove().end().html();
+        $('#news').html(htmlData);
+        
+        // store data to localStorage
+        localData[ get[0] ] = htmlData;
+        localStorage.setItem('news-show', JSON.stringify(localData));
+
+        // store read history
+        var readHistory = JSON.parse( localStorage.getItem('read-history') ) || [];
+        var lastLine = readHistory[ readHistory.length ];
+        if(curdata.find('#news_title').text() == '') return;
+        if(typeof lastLine == 'undefined' || lastLine['link'] != get[0]) {
+          readHistory[ readHistory.length ] = {
+            title: decodeURIComponent( get[1] ),
+            readDate: new Date().toLocaleString(),
+            link: get[0]
+          };
+        }
+        localStorage.setItem('read-history', JSON.stringify(readHistory));
+      },
+      error: function(jqXHR, textStatus, errorThrown){
+        $('#xload').hide();
+        window.location.href = "show.html#dialog";
+        // window.alert('加载错误: '+ errorThrown);
+      }
+    });
+  }else{
+    $('#news').html( localData[ get[0] ] );
+  }
+
+});  
+</script>
+</body>
+</html>

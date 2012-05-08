@@ -1,0 +1,61 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+  <title>阅读历史</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="assets/css/jquery.mobile-1.1.0.css" />
+  <script src="assets/js/jquery-1.7.2.min.js"></script>
+  <style type="text/css">
+    .list-info {color: #AAA;} 
+    #xload { text-align:center; display: none; }
+  </style>
+</head>
+<body> 
+
+<div data-role="page">
+
+  <div data-role="header" data-position="fixed" data-theme="e">
+    <h1>阅读历史</h1>
+  </div>
+
+  <div data-role="content">
+    <ul data-role="listview" id="news" data-theme="d" data-divider-theme="d">
+    </ul>
+  </div>
+  <div data-role="footer" data-position="fixed" data-theme="a">
+    <div data-role="navbar" data-iconpos="top">
+      <ul>
+        <li><a href="index.html" data-icon="back" data-ajax="false">返回列表</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script id="news-tmpl" type="text/x-jquery-tmpl"> 
+<li>
+  <a href="show.html?{{= link}}&{{= title}}" data-ajax="false" data-transition="filp">
+    <h3>${title}</h3>
+    <p class="list-info">Read Date: ${readDate}</p>
+  </a>
+</li>
+</script>
+
+<!-- <script type="text/javascript" src="assets/js/coffee-script.js"></script> -->
+<script type="text/javascript" src="assets/js/jquery.mobile-1.1.0.js"></script>
+<script type="text/javascript" src="assets/js/jquery.tmpl.min.js"></script>
+<script type="text/javascript">
+
+$(document).bind('pageinit', function(){
+
+  var historyData = JSON.parse( localStorage.getItem('read-history') ) || [];
+  historyData.reverse();
+  // console.log(historyData);
+  $( "#news-tmpl" ).tmpl( historyData ).appendTo( "#news" );
+  $('#news').listview("refresh");
+  
+});
+</script>
+</body>
+</html>

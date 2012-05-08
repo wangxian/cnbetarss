@@ -1,0 +1,48 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+  <title></title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <script src="../assets/js/jquery-1.7.2.min.js"></script>
+<!--  <script src="js/cordova-1.7.0rc1.js"></script>-->
+</head>
+<body> 
+<h1>cnBeta Rss.</h1>
+<div id="result"></div>
+<div id="news"></div>
+<script type="text/javascript">
+// origin url=http://cnbeta.com/backend.php
+
+var d = {};
+$.get('index.rss', function(data){
+  // window.alert('loading baidu.com page success.');
+  // $('#result').text(data);
+  d = items = data.getElementsByTagName('item');
+  // console.log(typeof items);
+  // d[0].getElementsByTagName('title')[0].lastChild.nodeValue
+  var tdata = '';
+  for(var i=0,_len=items.length;i<_len;i++){
+    tdata += items[i].getElementsByTagName('title')[0].lastChild.nodeValue + '<hr />';
+  }
+  $('#result').html(tdata);
+  
+  
+//  var title = '';
+//  items.forEach(function(v,k){
+//    
+//  });
+  //d = data;
+  
+},'xml');
+
+var newsdata = '';
+$.get('news2.html',function(data){
+  newsdata = $(data).find('#news_content');
+  newsdata.find('#googleAd_afc,.digbox').remove().end().appendTo('#news');
+  //console.log(htmldom.find('#news_content').html());
+},'html');
+</script>
+
+</body>
+</html>
