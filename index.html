@@ -9,6 +9,16 @@
   <style type="text/css">
     .list-info {color: #AAA;} 
     #xload { text-align:center; display: none; }
+    img {max-width: 100%;}
+    #news-title{ 
+      margin: 0px;
+      padding: 8px;
+      border-top: 6px solid orange;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-bottom: 1px solid #EEE;
+      text-align: center;
+    }
   </style>
 </head>
 <body> 
@@ -17,7 +27,6 @@
   <div data-role="header" data-position="fixed" data-theme="a">
     <h1>cnBeta资讯Rss</h1>
   </div>
-
   <div data-role="content">
     <ul data-role="listview" id="news">
     </ul>
@@ -26,110 +35,87 @@
   <div data-role="footer" data-position="fixed" data-theme="a">
     <div data-role="navbar" data-iconpos="top">
       <ul>
-        <li><a href="history.html" data-ajax="false" data-icon="grid">阅读历史</a></li>
-        <li><a href="#" data-icon="refresh" id="refresh-page">刷新列表</a></li>
+        <li><a href="#history" id="history" data-icon="grid">阅读历史</a></li>
+        <li><a href="#main" id="refresh-page" data-icon="refresh">刷新列表</a></li>
       </ul>
     </div>
   </div>
-
 </div>
 
 <div data-role="dialog" id="dialog">
-  
-    <div data-role="header" data-theme="d">
-      <h1>错误提示</h1>
-    </div>
-
-    <div data-role="content" data-theme="c">
-      <a href="index.html" data-role="button" data-ajax="false" data-theme="b">加载超时，重试？</a>
-      <a href="#main" data-role="button" data-theme="c">取消</a> 
-    </div>
+  <div data-role="header" data-theme="d">
+    <h1>错误提示</h1>
+  </div>
+  <div data-role="content" data-theme="c">
+    <a href="#" data-role="button"  data-theme="b">加载超时，重试？</a>
+    <a href="#main" data-role="button" data-theme="c">取消</a> 
+  </div>
 </div>
+
+<div data-role="page" id="show">
+  <div data-role="header" data-theme="f">
+    <p id="news-title"></p>
+  </div>
+  <div data-role="content">
+    <p id="news"></p>
+    <p id="xload">加载中...</p>
+  </div>
+  <div data-role="footer" data-position="fixed" data-theme="a">
+    <div data-role="navbar" data-iconpos="top">
+      <ul>
+        <li><a href="#history"  data-icon="grid">阅读历史</a></li>
+        <li><a href="#main" data-icon="back">返回列表</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div data-role="page" id="history">
+  <div data-role="header" data-position="fixed" data-theme="e">
+    <h1>阅读历史</h1>
+  </div>
+  <div data-role="content">
+    <ul data-role="listview" id="news" data-theme="d" data-divider-theme="d">
+    </ul>
+  </div>
+  <div data-role="footer" data-position="fixed" data-theme="a">
+    <div data-role="navbar" data-iconpos="top">
+      <ul>
+        <li><a href="#main" data-rol="back" data-icon="back">返回列表</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
 
 <script id="news-tmpl" type="text/x-jquery-tmpl"> 
 <li>
-  <a href="show.html?{{= link}}&{{= title}}" data-ajax="false" data-transition="filp">
-    <h3>${title}</h3>
-    <p>{{= description}}</p>
-    <p class="list-info">Date: ${pubDate}, Category: ${category}</p>
-  </a>
+  <a href="#show" class="item-title" data-transition="filp">${title}</a>
+</li>
+</script>
+<!-- <p>{{= description}}</p> -->
+<!-- <p class="list-info">Date: ${pubDate}, Category: ${category}</p> -->
+
+<script id="history-tmpl" type="text/x-jquery-tmpl"> 
+<li>
+  <a href="#show" class="item-title" data-transition="filp">${title}</a>
 </li>
 </script>
 
+
 <!-- <script type="text/javascript" src="assets/js/coffee-script.js"></script> -->
-<script type="text/javascript" src="assets/js/jquery.mobile-1.1.0.js"></script>
 <script type="text/javascript" src="assets/js/jquery.tmpl.min.js"></script>
 <script type="text/javascript">
+    var i=1;
+    $('body').click(function(e){
+        //console.log(e);
+        $('#news').prepend('<p>click refresh-page....='+ (i++) +'</p>');
+        return false;
+    });
 
-$(document).bind('pageinit', function(){
-
-  var indexCacheTime = localStorage.getItem('index-cache-time') || 0;
-  var indexData = JSON.parse(localStorage.getItem('index-cache-data')) || [];
-  // console.log(indexData);
-
-  if(indexCacheTime + 1200000 < new Date().getTime()) {
-    // show loading text
-    $('#xload').show();
-    $.ajax({
-      url: 'http://www.cnbeta.com/backend.php',
-      type: 'GET',
-      dataType: 'xml',
-      success: function(data){
-        $('#xload').hide();
-
-        items = data.getElementsByTagName('item');
-        var newsdata = [];
-        for(var i=0,_len=items.length;i<_len;i++){
-          if(i>12) break;
-          newsdata[i]                = {};
-          newsdata[i]['title']       = items[i].getElementsByTagName('title')[0].lastChild.nodeValue;
-          newsdata[i]['link']        = items[i].getElementsByTagName('link')[0].lastChild.nodeValue;
-          newsdata[i]['category']    = items[i].getElementsByTagName('category')[0].lastChild.nodeValue;
-
-          var curdate                = new Date(items[i].getElementsByTagName('pubDate')[0].lastChild.nodeValue);
-
-          newsdata[i]['pubDate']     = curdate.toLocaleDateString() + ' ' + curdate.toLocaleTimeString();
-          newsdata[i]['description'] = items[i].getElementsByTagName('description')[0].lastChild.nodeValue.replace(/\<[^>]*\>/gi, ' ');
-          
-        }
-        window.newsdata = newsdata;
-        $('#xload').hide();
-
-        // console.log(newsdata);
-        $( "#news-tmpl" ).tmpl( newsdata ).appendTo( "#news" );
-        $('#news').listview("refresh");
-
-        localStorage.setItem('index-cache-data', JSON.stringify(newsdata));
-        localStorage.setItem('index-cache-time', new Date().getTime());
-
-      },
-      error: function(jqXHR, textStatus, errorThrown){
-        $('#xload').hide();
-        
-        $( "#news-tmpl" ).tmpl( indexData ).appendTo( "#news" );
-        $('#news').listview("refresh");
-
-        window.location.href = "index.html#dialog";
-      }
-    }); 
-
-  }
-  else{
-    $( "#news-tmpl" ).tmpl( indexData ).appendTo( "#news" );
-    $('#news').listview("refresh");
-  }
-
-  // var newsdata = [
-  //   {title: '标题', contents: '中广网北京5月4日消息 据经济之声《天下公司》报道，经济之声《天天315》节目两天来连续报道爱仕达炒锅问题，今天又有了最新进展。同一型号的炒锅，在超市等实体店购买，炒锅 的壁的厚度是5毫米，而在京东商城网上购买，却只有3毫米。行业专家和消费者质疑爱仕达炒锅涉嫌欺诈。', date: '8:24'},
-  //   {title: '标题', contents: '中广网北京5月4日消息 据经济之声《天下公司》报道，经济之声《天天315》节目两天来连续报道爱仕达炒锅问题，今天又有了最新进展。同一型号的炒锅，在超市等实体店购买，炒锅 的壁的厚度是5毫米，而在京东商城网上购买，却只有3毫米。行业专家和消费者质疑爱仕达炒锅涉嫌欺诈。', date: '9:24'},
-  // ];
-  // $( "#news-tmpl" ).tmpl( window.newsdata ).appendTo( "#news" );
-  // $('#news').listview("refresh");
-  
-  $("#refresh-page").bind('click', function(){ 
-    window.location.href = 'index.html?'+ new Date().getTime(); 
-  });
-});
 </script>
+<script type="text/javascript" src="assets/js/jquery.mobile-1.1.0.js"></script>
 </body>
 </html>
