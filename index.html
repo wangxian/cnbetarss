@@ -1,121 +1,73 @@
-<!DOCTYPE html> 
-<html> 
-  <head> 
-  <title>新闻首页</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="assets/css/jquery.mobile-1.1.0.css" />
-  <script src="assets/js/jquery-1.7.2.min.js"></script>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+
+  <script type="text/javascript" charset="utf-8" src="assets/js/cordova-1.7.0.js"></script>
+
   <style type="text/css">
-    .list-info {color: #AAA;} 
-    #xload { text-align:center; display: none; }
-    img {max-width: 100%;}
-    #news-title{ 
-      margin: 0px;
-      padding: 8px;
-      border-top: 6px solid orange;
-      font-size: 1.2em;
-      font-weight: bold;
-      border-bottom: 1px solid #EEE;
-      text-align: center;
+    #news {
+      margin: 0 auto;
+      /*width: 300px;
+      height: 400px;*/
+      overflow-y: auto;
+      overflow-x: hidden;
     }
   </style>
+
 </head>
-<body> 
+<body>
+<div id="news">
+<pre>
+百度一下，你就知道
+全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
+www.baidu.com/ 2012-5-15 - 百度快照
 
-<div data-role="page" id="main">
-  <div data-role="header" data-position="fixed" data-theme="a">
-    <h1>cnBeta资讯Rss</h1>
-  </div>
-  <div data-role="content">
-    <ul data-role="listview" id="news">
-    </ul>
-    <p id="xload">加载中...</p>
-  </div>
-  <div data-role="footer" data-position="fixed" data-theme="a">
-    <div data-role="navbar" data-iconpos="top">
-      <ul>
-        <li><a href="#history" id="history" data-icon="grid">阅读历史</a></li>
-        <li><a href="#main" id="refresh-page" data-icon="refresh">刷新列表</a></li>
-      </ul>
-    </div>
-  </div>
+百度网址大全
+百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
+site.baidu.com/ 2012-5-12 - 百度快照
+
+百度一下，你就知道
+全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
+www.baidu.com/ 2012-5-15 - 百度快照
+
+百度网址大全
+百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
+site.baidu.com/ 2012-5-12 - 百度快照
+
+百度一下，你就知道
+全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
+www.baidu.com/ 2012-5-15 - 百度快照
+
+百度网址大全
+百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
+site.baidu.com/ 2012-5-12 - 百度快照
+
+百度一下，你就知道
+全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
+www.baidu.com/ 2012-5-15 - 百度快照
+
+百度网址大全
+百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
+site.baidu.com/ 2012-5-12 - 百度快照
+
+百度一下，你就知道
+全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
+www.baidu.com/ 2012-5-15 - 百度快照
+
+百度网址大全
+百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
+site.baidu.com/ 2012-5-12 - 百度快照
+
+百度一下，你就知道
+全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
+www.baidu.com/ 2012-5-15 - 百度快照
+
+百度网址大全
+百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
+site.baidu.com/ 2012-5-12 - 百度快照
+</pre>
 </div>
-
-<div data-role="dialog" id="dialog">
-  <div data-role="header" data-theme="d">
-    <h1>错误提示</h1>
-  </div>
-  <div data-role="content" data-theme="c">
-    <a href="#" data-role="button"  data-theme="b">加载超时，重试？</a>
-    <a href="#main" data-role="button" data-theme="c">取消</a> 
-  </div>
-</div>
-
-<div data-role="page" id="show">
-  <div data-role="header" data-theme="f">
-    <p id="news-title"></p>
-  </div>
-  <div data-role="content">
-    <p id="news"></p>
-    <p id="xload">加载中...</p>
-  </div>
-  <div data-role="footer" data-position="fixed" data-theme="a">
-    <div data-role="navbar" data-iconpos="top">
-      <ul>
-        <li><a href="#history"  data-icon="grid">阅读历史</a></li>
-        <li><a href="#main" data-icon="back">返回列表</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div data-role="page" id="history">
-  <div data-role="header" data-position="fixed" data-theme="e">
-    <h1>阅读历史</h1>
-  </div>
-  <div data-role="content">
-    <ul data-role="listview" id="news" data-theme="d" data-divider-theme="d">
-    </ul>
-  </div>
-  <div data-role="footer" data-position="fixed" data-theme="a">
-    <div data-role="navbar" data-iconpos="top">
-      <ul>
-        <li><a href="#main" data-rol="back" data-icon="back">返回列表</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-
-
-
-<script id="news-tmpl" type="text/x-jquery-tmpl"> 
-<li>
-  <a href="#show" class="item-title" data-transition="filp">${title}</a>
-</li>
-</script>
-<!-- <p>{{= description}}</p> -->
-<!-- <p class="list-info">Date: ${pubDate}, Category: ${category}</p> -->
-
-<script id="history-tmpl" type="text/x-jquery-tmpl"> 
-<li>
-  <a href="#show" class="item-title" data-transition="filp">${title}</a>
-</li>
-</script>
-
-
-<!-- <script type="text/javascript" src="assets/js/coffee-script.js"></script> -->
-<script type="text/javascript" src="assets/js/jquery.tmpl.min.js"></script>
-<script type="text/javascript">
-    var i=1;
-    $('body').click(function(e){
-        //console.log(e);
-        $('#news').prepend('<p>click refresh-page....='+ (i++) +'</p>');
-        return false;
-    });
-
-</script>
-<script type="text/javascript" src="assets/js/jquery.mobile-1.1.0.js"></script>
 </body>
 </html>
