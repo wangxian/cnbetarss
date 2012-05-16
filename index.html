@@ -1,73 +1,237 @@
+<!DOCTYPE html><!--HTML5 doctype-->
 <html>
 <head>
-  <title></title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+<title>cnBeta新闻阅读</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes" />
 
-  <script type="text/javascript" charset="utf-8" src="assets/js/cordova-1.7.0.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/jq.ui.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/icons.css" />
 
-  <style type="text/css">
-    #news {
-      margin: 0 auto;
-      /*width: 300px;
-      height: 400px;*/
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-  </style>
+
+<!-- <script type="text/javascript" charset="utf-8" src="assets/js/cordova-1.7.0.js"></script> -->
+<script type="text/javascript" charset="utf-8" src="assets/js/jq.mobi.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/js/jq.ui.min.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="assets/js/jq.scroller.js"></script>
+<!-- <script type="text/javascript" charset="utf-8" src="assets/js/touch.js"></script> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="assets/css/jq.ui.frosty.css" /> -->
+<style type="text/css">
+ul > li > a { 
+  font-size: 14px;
+}
+.jqmscrollBar {background:white !important;}
+#show-title{
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 1px solid #444;
+  padding: 4px 0;
+  margin: 0 auto;
+}
+#show-news{
+  margin: 5px;
+}
+</style>
+
+
+<script type="text/javascript">
+/* This function runs once the page is loaded, but appMobi is not yet active */
+  
+$.ui.autoLaunch=false;
+
+$.ui.openLinksNewTab=false;
+var init = function(){
+  $.ui.backButtonText = "返回";
+  window.setTimeout(function(){$.ui.launch();},1000);
+};
+document.addEventListener("DOMContentLoaded",init,false);  
+ 
+/* This code prevents users from dragging the page */
+var preventDefaultScroll = function(event) {
+  event.preventDefault();
+  window.scroll(0,0);
+  return false;
+};
+
+document.addEventListener('touchmove', preventDefaultScroll, false);
+
+/* This code is used to run as soon as appMobi activates */
+var onDeviceReady=function(){
+  AppMobi.device.setRotateOrientation("portrait");
+  AppMobi.device.setAutoRotate(false);
+
+  //hide splash screen
+  AppMobi.device.hideSplashScreen();  
+};
+document.addEventListener("appMobi.device.ready",onDeviceReady,false);
+  
+</script>
 
 </head>
 <body>
-<div id="news">
-<pre>
-百度一下，你就知道
-全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
-www.baidu.com/ 2012-5-15 - 百度快照
 
-百度网址大全
-百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
-site.baidu.com/ 2012-5-12 - 百度快照
+<div id="jQUi">
+    <div id="splashscreen" class='ui-loader'>
+      <br><br><br><br>
+      <span class='ui-icon ui-icon-loading spin'></span><h1 >加载中...</h1>
+    </div>
+    <div id="content">
 
-百度一下，你就知道
-全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
-www.baidu.com/ 2012-5-15 - 百度快照
+      <div id="main" title="cnBeta新闻阅读" selected="true">
+        <ul id="news">
+        </ul>
+      </div>
 
-百度网址大全
-百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
-site.baidu.com/ 2012-5-12 - 百度快照
+      <div id="show" title="阅读新闻" class="panel">
+        <div id="show-title">网游成瘾</div>
+        <div id="show-news">内容</div>
+      </div>
 
-百度一下，你就知道
-全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
-www.baidu.com/ 2012-5-15 - 百度快照
+      <div id="history" title="阅读历史" class="panel">
+      </div>
+    </div>
 
-百度网址大全
-百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
-site.baidu.com/ 2012-5-12 - 百度快照
-
-百度一下，你就知道
-全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
-www.baidu.com/ 2012-5-15 - 百度快照
-
-百度网址大全
-百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
-site.baidu.com/ 2012-5-12 - 百度快照
-
-百度一下，你就知道
-全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
-www.baidu.com/ 2012-5-15 - 百度快照
-
-百度网址大全
-百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
-site.baidu.com/ 2012-5-12 - 百度快照
-
-百度一下，你就知道
-全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。
-www.baidu.com/ 2012-5-15 - 百度快照
-
-百度网址大全
-百度网址大全 -- 简单可依赖的上网导航... 加入百度推广| 搜索风云榜| 关于百度| 网友留言| 宽屏版 Baidu 使用百度前必读 京ICP证030173号 ...
-site.baidu.com/ 2012-5-12 - 百度快照
-</pre>
+    <div id="navbar">
+        <a data-ignore-pressed="true" data-resethistory="true" class="icon refresh" href="#main">刷新新闻</a>
+        <a data-ignore-pressed="true" data-resethistory="true" class='icon star' href="#history">阅读历史</a>
+    </div>
 </div>
+<iframe src="" width="0" heigth="0" id="iframe_news" name="iframe_news"></iframe>
+<script type="text/javascript">
+
+function reader_list(id,data)
+{
+  var tmp = '';
+  for(var i=0,_len=data.length;i<_len;i++)
+  {
+    var title = data[i].title.length > 20 ? data[i].title.slice(0,20) + '...' : data[i].title;
+    tmp += '<li><a href="#" onclick="javascript: showNews(\''+ data[i].link +'\', \''+ data[i].title +'\');">'+ title +'</a></li>'; 
+  }
+  $(id).html(tmp + '<li style="height: 140px"> </li>');
+}
+
+function ajax_rss(func)
+{
+  $.ajax({
+
+    url: 'http://www.cnbeta.com/backend.php',
+    // url: 'index.rss',
+    type: 'GET',
+    dataType: 'text',
+    success: function(data){
+      xmlDoc = new DOMParser().parseFromString(data, "text/xml");
+      items = xmlDoc.getElementsByTagName('item');
+
+      var newsdata = [];
+      for(var i=0,_len=items.length;i<_len;i++){
+        newsdata[i]                = {};
+        newsdata[i]['title']       = items[i].getElementsByTagName('title')[0].lastChild.nodeValue;
+        newsdata[i]['link']        = items[i].getElementsByTagName('link')[0].lastChild.nodeValue;
+        // newsdata[i]['category']    = items[i].getElementsByTagName('category')[0].lastChild.nodeValue;
+
+        // var curdate                = new Date(items[i].getElementsByTagName('pubDate')[0].lastChild.nodeValue);
+
+        // newsdata[i]['pubDate']     = curdate.toLocaleDateString() + ' ' + curdate.toLocaleTimeString();
+        // newsdata[i]['description'] = items[i].getElementsByTagName('description')[0].lastChild.nodeValue.replace(/\<[^>]*\>/gi, ' ');
+      }
+      // window.newsdata = newsdata;
+      // console.log(newsdata);
+      func(newsdata);
+      xmlDoc = items = newsdata = null;
+    },
+    error: function(){
+      // $.ui.popup('加载失败, 是否重试?', '错误提示');
+      $.ui.popup({ title:" 警告 ",
+        message:"加载失败, 是否重试?",
+        cancelText:"取消", 
+        cancelCallback: function(){console.log("cancelled");},
+        doneText:"确认",
+        doneCallback: function(){console.log("Done for!");},
+        cancelOnly:false}
+      );
+    }
+  }); 
+}
+
+function showNews(url,title)
+{
+  $('#show-title').html(title);
+  $('#show-news').html('');
+
+  $.ui.loadContent('#show', false, false, 'slide');
+  $.ui.showMask('正在加载...');
+
+  var iframe_news = document.getElementById('iframe_news');
+  iframe_news.src = url;
+
+  
+  iframe_news.onload = function(){
+    $.ui.hideMask();
+    
+    var iframe_domobj = iframe_news.contentDocument;
+    news_content  = iframe_domobj.getElementById('news_content');
+    var divall = news_content.getElementsByTagName('div');
+    for(var i=0,_len=divall.length;i<_len;i++) 
+    {
+      if( typeof divall[i]['id'] != 'undefined' && divall[i]['id'] == 'googleAd_afc' )
+      {
+        news_content.removeChild( divall[i] );
+      }
+    }
+    console.log( news_content );
+    //$('#show-news').html(news_content.innerHTML);
+  }
+
+}
+ 
+$.ui.ready(function(){
+  var indexCacheTime = localStorage.getItem('index-cache-time') || 0;
+  var indexData = JSON.parse(localStorage.getItem('index-cache-data')) || [];
+  // console.log(indexData);
+
+  if( new Date().getTime() - indexCacheTime > 12000000 ) 
+  {
+    window.ajax_rss(function(indexData){
+      window.reader_list('#news', indexData);
+
+      localStorage.setItem('index-cache-data', JSON.stringify(indexData));
+      localStorage.setItem('index-cache-time', new Date().getTime());
+    });
+  }
+  else
+  {
+    window.reader_list('#news', indexData);
+  }
+
+  /**
+   * 刷新页面
+   * @type Event
+   * @return void
+   */
+  $('#navbar .refresh').bind('click', function(){
+    $('#news').empty();
+    $.ui.showMask('正在加载...');
+    window.ajax_rss(function(indexData){
+      window.reader_list('#news', indexData);
+
+      localStorage.setItem('index-cache-data', JSON.stringify(indexData));
+      localStorage.setItem('index-cache-time', new Date().getTime());
+      $.ui.hideMask();
+    });
+  });
+
+  $("#news").scroller({
+    scrollBars: true,
+    verticalScroll: true,
+    horizontalScroll: false,
+    vScrollCSS: "jqmScrollbar",
+    hScrollCSS: "jqmScrollbar"
+  });
+
+});
+
+</script>
 </body>
 </html>
